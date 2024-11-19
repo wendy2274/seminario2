@@ -1,0 +1,126 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+    <!-- Botón para mostrar u ocultar la lista de nombres -->
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleNombres()">
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="contenedor">
+  <!-- Mostrar nombres registrados al hacer clic en el botón "+" -->
+  <ion-list *ngIf="mostrarNombres" class="lista-usuarios">
+    <!-- Itera a través de la lista 'personas' para mostrar cada nombre -->
+    <ion-item *ngFor="let persona of personas" (click)="selectPersona(persona)">
+      <ion-label>{{ persona.nombre }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Mostrar detalles del usuario seleccionado -->
+  <div *ngIf="personaSeleccionada">
+    <div class="profile-header">
+      <img [src]="personaSeleccionada.foto" alt="Foto de perfil" class="profile-image">
+      <ion-button fill="clear" class="edit-button" (click)="toggleEditMode()">
+        <ion-icon name="create-outline"></ion-icon> Editar
+      </ion-button>
+    </div>
+    <ion-button fill="outline" class="change-photo-button">
+      <ion-icon name="image-outline"></ion-icon> Cambiar Foto </ion-button>
+
+    <!-- Modo de visualización -->
+    <div *ngIf="!editMode">
+      <ion-list class="lista-usuarios">
+        <ion-list-header>
+          <h2>Perfil de {{ personaSeleccionada.nombre }}</h2>
+        </ion-list-header>
+
+        <ion-item>
+          <ion-label>Nombre</ion-label>
+          <ion-text>{{ personaSeleccionada.nombre }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>E-mail</ion-label>
+          <ion-text>{{ personaSeleccionada.correo }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Rol</ion-label>
+          <ion-text>{{ personaSeleccionada.rol }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Contraseña</ion-label>
+          <ion-text>{{ personaSeleccionada.contrasena }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Estado</ion-label>
+          <ion-text [ngClass]="{'active': personaSeleccionada.estado === 'Activo', 'inactive': personaSeleccionada.estado === 'Inactivo'}">
+            {{ personaSeleccionada.estado }}
+          </ion-text>
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Modo de edición -->
+    <form *ngIf="editMode" (ngSubmit)="guardarCambios()">
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked">Nombre</ion-label>
+          <ion-input [(ngModel)]="personaSeleccionada.nombre" name="nombre"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">E-mail</ion-label>
+          <ion-input [(ngModel)]="personaSeleccionada.correo" name="correo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Rol</ion-label>
+          <ion-input [(ngModel)]="personaSeleccionada.rol" name="rol"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Contraseña</ion-label>
+          <ion-input [(ngModel)]="personaSeleccionada.contrasena" name="contrasena" type="password"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Estado</ion-label>
+          <ion-select [(ngModel)]="personaSeleccionada.estado" name="estado">
+            <ion-select-option value="Activo">Activo</ion-select-option>
+            <ion-select-option value="Inactivo">Inactivo</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" type="submit">Guardar Cambios</ion-button>
+      <ion-button expand="block" fill="outline" (click)="toggleEditMode()">Cancelar</ion-button>
+    </form>
+  </div>
+</ion-content>
+
+<!-- Agregar un footer con botones de navegación -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goHome()">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="goForward()">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

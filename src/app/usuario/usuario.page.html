@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gestión de Usuarios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen="true"  class="contenedor">
+  <ion-list class="lista-usuarios">
+    <ion-item *ngFor="let usuario of usuarios">
+      <ion-label>
+        <h2>{{ usuario.nombre }}</h2>
+        <!-- <p>{{ usuario.correo }}</p> -->
+      </ion-label>
+      <ion-button slot="end" color="danger" (click)="confirmDelete(usuario)">Eliminar</ion-button>
+      <ion-button slot="end" color="danger"  (click)="goToEdit(usuario)">Editar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-button class="boton3" expand="block" (click)="goToRegister()">Registrar Nuevo Usuario</ion-button>
+</ion-content>
+
+<!-- Agregar un footer con botones de navegación -->
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-button (click)="goHome()">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="goForward()">
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
